@@ -23,6 +23,10 @@ public class Village {
         printVillageData();
     }
 
+    public Village(String cords){
+        this.cords = cords;
+    }
+
     private void printVillageData(){
 
         System.out.println(sources.get(Sources.WOOD));
@@ -43,4 +47,45 @@ public class Village {
 //            e.getValue().substring(1, e.getValue().length() - 1);
     }
 
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCords() {
+        return cords;
+    }
+
+    public void setCords(String cords) {
+        this.cords = cords;
+    }
+
+    public String getPoints() {
+        return points;
+    }
+
+    public void setPoints(String points) {
+        this.points = points;
+    }
+
+    public HashMap<Sources, String> getSources() {
+        return sources;
+    }
+
+    public void setSources(HashMap<Sources, String> sources) {
+        this.sources = sources;
+    }
+
+    public HashMap<Army, String> getArmy() {
+        return army;
+    }
+
+    public void setArmy(HashMap<Army, String> army) {
+        this.army = army;
+    }
 }

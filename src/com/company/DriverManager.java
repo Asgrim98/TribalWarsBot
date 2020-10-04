@@ -9,6 +9,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,19 +23,20 @@ public class DriverManager {
     private WebDriverWait wait;
     private List<Village> villageList;
 
-    private final String villageId = "29303";
-    private final String worldNumber = "157";
+    private final static String villageId = "29303";
+    private final static String worldNumber = "157";
 
     // Buildings
-    private final String main = "https://pl" + worldNumber + ".plemiona.pl/game.php?village=" + villageId + "&screen=main";
-    private final String barracks = "https://pl" + worldNumber + ".plemiona.pl/game.php?village=" + villageId + "&screen=barracks";
-    private final String place = "https://pl" + worldNumber + ".plemiona.pl/game.php?village=" + villageId + "&screen=place";
-    private final String stable = "https://pl" + worldNumber + ".plemiona.pl/game.php?village=" + villageId + "&screen=stable";
+    private final static String main = "https://pl" + worldNumber + ".plemiona.pl/game.php?village=" + villageId + "&screen=main";
+    private final static String barracks = "https://pl" + worldNumber + ".plemiona.pl/game.php?village=" + villageId + "&screen=barracks";
+    protected final static String place = "https://pl" + worldNumber + ".plemiona.pl/game.php?village=" + villageId + "&screen=place";
+    private final static String stable = "https://pl" + worldNumber + ".plemiona.pl/game.php?village=" + villageId + "&screen=stable";
 
-    public DriverManager(String login, String password){
+    public DriverManager(String login, String password) throws IOException {
 
         this.login = login;
         this.password = password;
+        villageList = new ArrayList<>();
 
         System.setProperty("webdriver.gecko.driver", "..\\..\\..\\chromedriver.exe");
         mainDriver = new ChromeDriver();
@@ -41,6 +45,9 @@ public class DriverManager {
 
         login();
         initVillage();
+        AttackManager attackManager = new AttackManager(villageList.get(0), mainDriver, wait);
+        attackManager.countAttacks();
+        attackManager.planAttacks();
     }
 
     private Boolean login(){
@@ -86,6 +93,7 @@ public class DriverManager {
         army.put(Army.LIGHT, light);
 
         Village village = new Village(sources, army);
+        villageList.add(village);
 
         return true;
     }
