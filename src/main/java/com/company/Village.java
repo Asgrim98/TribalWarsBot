@@ -18,14 +18,13 @@ public class Village {
 
         this.sources = sources;
         this.army = army;
-
-        normalizeArmyStrings();
-        printVillageData();
     }
 
     public Village(String cords){
         this.cords = cords;
     }
+
+    public Village() { }
 
     private void printVillageData(){
 
@@ -38,13 +37,9 @@ public class Village {
         System.out.println(army.get(Army.SCOUT));
     }
 
-    private void normalizeArmyStrings(){
+    public void normalizeArmyStrings(){
 
         army.replaceAll((k, v) -> v.substring(1, v.length() - 1));
-
-
-//        for (Map.Entry<Army, String> e : army.entrySet())
-//            e.getValue().substring(1, e.getValue().length() - 1);
     }
 
 

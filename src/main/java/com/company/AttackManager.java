@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import picocli.CommandLine;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -30,9 +31,9 @@ public class AttackManager {
 
         Integer spears = Integer.valueOf(myVillage.getArmy().get(Army.SPEAR));
         Integer swords = Integer.valueOf(myVillage.getArmy().get(Army.SWORD));
-        Integer biggestTroop = (spears > swords) ?  spears : swords;
+        Integer lessTroops = (spears > swords) ?  swords : spears;
 
-        possibleFarmAttacks = biggestTroop / 2;
+        possibleFarmAttacks = lessTroops / 2;
         villageToAttack = readFile();
     }
 
@@ -42,6 +43,7 @@ public class AttackManager {
 
             Village village = it.next();
             if (possibleFarmAttacks == 0) {
+                System.out.println("Brak wojsk");
                 break;
             } else {
 
@@ -49,7 +51,7 @@ public class AttackManager {
                 possibleFarmAttacks--;
                 driver.manage().timeouts().implicitlyWait(150, TimeUnit.MILLISECONDS);
             }
-            File myObj = new File("\\actual.txt");
+            File myObj = new File("C:\\PLIKI\\Programowanie\\TribalWarsBot\\src\\main\\java\\com\\company\\files\\actual.txt");
             FileWriter myWriter = new FileWriter(myObj);
             myWriter.write( village.getCords() );
             myWriter.close();
@@ -94,7 +96,7 @@ public class AttackManager {
         ArrayList<String> result = new ArrayList<>();
         ArrayList<Village> enemyVillages = new ArrayList<>();
 
-        File file = new File("C:\\PLIKI\\Programowanie\\TribalWarsBot\\src\\com\\company\\files\\cords.txt");
+        File file = new File("C:\\PLIKI\\Programowanie\\TribalWarsBot\\src\\main\\java\\com\\company\\files\\cords.txt");
 
         System.out.println("Czytam");
         try (Scanner s = new Scanner(new FileReader(file))) {
